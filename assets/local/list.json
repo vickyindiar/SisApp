@@ -1,0 +1,23 @@
+{ "kode_barang":
+    [ 
+        {
+            "PACK":[
+                {
+                "SEKOLAH":
+                    [
+                        {
+                        "type":[{"val":"sma", "text":"SMA"}, {"val":"smp", "text":"SMP"}, {"val":"sd", "text":"SD"}], 
+                        "color":[{"val":"h", "text":"Hitam"}, {"val":"p", "text":"Putih"}, {"val":"hp", "text":"Hitam Putih"}],
+                        "grade":[{"val":"1", "text":"Executive"}, {"val":"2", "text":"Lutiviear"}, {"val":"3", "text":"Obral"}]
+                        }
+                    ],
+                "BAPAK-BAPAK":
+                    [
+
+                    ]
+                }
+            ],
+            "BLANKO":[]
+        }
+    ]
+}
