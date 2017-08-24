@@ -10,12 +10,17 @@ class Master_model extends CI_Model{
     }
     function GetDataKategori($where = null){
         $query = "SELECT * FROM kategori ";
-        $where != null ? $query = $query."WHERE kode_barang = $where" : $query;
+        $where != null ? $query = $query."WHERE kode_kategoribarang = $where" : $query;
         return $this->db->query($query)->result();
     }
     function GetDataPemasok($where = null){
         $query = "SELECT * FROM pemasok ";
-        $where != null ? $query = $query."WHERE kode_barang = $where" : $query;
+        $where != null ? $query = $query."WHERE kode_pemasok = $where" : $query;
+        return $this->db->query($query)->result();
+    }
+    function GetDataUser($where = null){
+        $query = "SELECT * FROM user ";
+        $where != null ? $query = $query."WHERE iduser = $where" : $query;
         return $this->db->query($query)->result();
     }
 

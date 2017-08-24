@@ -15,13 +15,12 @@
                             <span>Tambah Data</span>
                         </button>  
                      </div>
-                  </div>
-                   <div class="row">
-                        <div class="col-lg-12 col-md-6 col-sm-6">
-                            <div id="GridBarang">                 
-                        </div>
-                   </div>
-            </div>   
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-6 col-sm-6">
+                         <div id="GridBarang">  </div>
+                     </div>
+                </div>   
         </div>
     </div>
     </div>

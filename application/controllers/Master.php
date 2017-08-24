@@ -12,6 +12,10 @@ class Master extends CI_Controller
         $this->template->set('title', 'Barang');
         $this->template->load('main_layout','contents', 'Master/barang_view');
     }
+    function Kategori(){
+        $this->template->set('title', 'Kategori');
+        $this->template->load('main_layout','contents', 'Master/kategori_view');
+    }
     function ShowDataBarang(){
         $result = $this->model->GetDataBarang();
         echo json_encode($result);
@@ -22,6 +26,11 @@ class Master extends CI_Controller
     }
     function ShowDataPemasok(){
         $result = $this->model->GetDataPemasok();
+        echo json_encode($result);
+    }
+
+    function ShowDataUser(){
+        $result = $this->model->GetDataUser();
         echo json_encode($result);
     }
 
