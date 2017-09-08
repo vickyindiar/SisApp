@@ -8,13 +8,13 @@ class Master extends CI_Controller
         $this->load->model('Master_model','model');
     }
 
-    function Barang(){
-        $this->template->set('title', 'Barang');
-        $this->template->load('main_layout','contents', 'Master/barang_view');
-    }
-    function Kategori(){
+    function Index(){
+        $data['barang_view'] = $this->load->view('Master/barang_view', NULL, TRUE);
+        $data['kategori_view'] = $this->load->view('Master/kategori_view', NULL, TRUE);
+        $data['pemasok_view'] = $this->load->view('Master/pemasok_view', NULL, TRUE);
+        $data['pengguna_view'] = $this->load->view('Master/pengguna_view', NULL, TRUE);
         $this->template->set('title', 'Kategori');
-        $this->template->load('main_layout','contents', 'Master/kategori_view');
+        $this->template->load('main_layout','contents', 'Master/master_view', $data);
     }
     function ShowDataBarang(){
         $result = $this->model->GetDataBarang();
@@ -32,6 +32,11 @@ class Master extends CI_Controller
     function ShowDataUser(){
         $result = $this->model->GetDataUser();
         echo json_encode($result);
+    }
+
+    function getDiff($ori, $new){
+        $result = array();
+        
     }
 
 

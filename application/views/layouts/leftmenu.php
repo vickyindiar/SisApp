@@ -35,15 +35,10 @@
                         </a>
                     </li>
                      <li>
-                        <a href="javascript:void(0);" class="menu-toggle">
+                        <a href="<?php echo base_url()?>Master">
                             <i class="material-icons">widgets</i>
                             <span>Master</span>
                         </a>
-                        <ul class="ml-menu">  
-                            <li><a href="<?php echo base_url()?>Master/Barang" > <span>Barang</span></a></li>
-                            <li><a href="<?php echo base_url()?>Master/Kategori" > <span>Kategori</span></a></li>
-                            <li><a href="javascript:void(0);" > <span>Supplier</span></a></li>
-                        </ul>
                     </li>
 
                     <li>
