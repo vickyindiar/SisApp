@@ -63,10 +63,25 @@ class Master_model extends CI_Model{
         }
     }
 
-    function DeleteDataBarang($id){
+    function DeleteDataBarang(){
+        $id = $this->input->get('id');
         $this->db->where('kode_barang', $id);
         $this->db->delete('barang');
         if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function InsertDataKategori(){
+        $data = array(
+            'kode_kategoribarang' => ucwords($this->input->post('kode_kategoribarang')),
+            'nama_kategori' => ucwords($this->input->post('nama_kategori')),
+            'keterangan' => $this->input->post('keterangan')
+            );
+        $this->db->insert('kategori', $data);
+        if($this->db->affected_rows() > 0 ){
             return true;
         }else{
             return false;

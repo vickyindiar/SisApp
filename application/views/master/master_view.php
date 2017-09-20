@@ -46,6 +46,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div id="GridBarang">  </div>
+                            <div style="font-size: 13px; margin-top: 20px; font-family: Verdana, Geneva, DejaVu Sans, sans-serif;" id="eventLog"></div>
                         </div>
                     </div> 
                 </div>
@@ -77,7 +78,7 @@
                     <div class="btn-group" role="group" aria-label="Default button group" style="margin-bottom:10px">
                         <button type="button" id="btn-tambah-pengguna" class="btn bg-blue waves-effect" onclick="btnTambah('GridPengguna')"><i class="material-icons">playlist_add</i><span> Tambah</span></button>
                         <button type="button" id="btn-ubah-pengguna" class="btn bg-green waves-effect"  onclick="btnUbah('GridPengguna')"><i class="material-icons">border_color</i><span> Ubah</span></button>
-                        <button type="button" id="btn-hapus-pengguna" class="btn bg-red waves-effect"  onclick="deletebarang('GridPengguna')"><i class="material-icons">delete_forever</i><span> Hapus</span></button>
+                        <button type="button" id="btn-hapus-pengguna" class="btn bg-red waves-effect"  onclick="btnHapus('GridPengguna')"><i class="material-icons">delete_forever</i><span> Hapus</span></button>
                     </div>       
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -97,23 +98,20 @@
 
 
 <script>
-    $(function(){
-         $('#btn-group-simpan').hide();           
-    });
-
+var StatusBtnSimpan;
+var conKategori, conPemasok;
+ $(function(){ $('#btn-group-simpan').hide(); });
 function SetintJson(objects){
     for(var i = 0; i < objects.length; i++){
-	var obj = objects[i];
-    for(var prop in obj){
-    	if(obj.hasOwnProperty(prop) && !isNaN(obj[prop])){
-        	obj[prop] = +obj[prop];   
+        var obj = objects[i];
+        for(var prop in obj){
+            if(obj.hasOwnProperty(prop) && !isNaN(obj[prop])){
+                obj[prop] = +obj[prop];   
+            }
         }
+        return objects;
     }
-    return objects;
 }
-}
-
-
 
 function getTabIndex(){
  var tab = $('#tab-master'), active = tab.find('.tab-pane.active'), id = active.attr("id");
@@ -122,28 +120,38 @@ function getTabIndex(){
  else if(id.indexOf('pemasok') > -1) return 2;
  else if(id.indexOf('pengguna') > -1) return 3;
 }
-var tabActive = getTabIndex();
+
+
 function btnTambah(selector){  
-    if(tabActive == 0){
-        ModalTambahBarang();
-    }else{
-        alert('1');
-    }
-
-
+    var tabActive = getTabIndex();
+    if(tabActive == 0){  ModalTambahBarang(); }
+    else if(tabAvtive == 1){  ModalTambahKategori(); }
+    else if(tabAvtive == 2){  ModalTambahPemasok();  }
+    else { ModalTambahPengguna();}
 }
 
 function btnUbah(selector){
-    if(tabActive == 0){
-        ModalUbahBarang();
-    }
+    var tabActive = getTabIndex();
+    if(tabActive == 0){ ModalUbahBarang(); }
+    else if(tabAvtive == 1){  ModalUbahKategori(); }
+    else if(tabAvtive == 2){  ModalUbahPemasok();  }
+    else { ModalUbahPengguna();}
+}
+
+function btnHapus(selector){
+    var tabActive = getTabIndex();
+    if(tabActive == 0){ HapusBarang();}
+    else if(tabAvtive == 1){  HapusKategori(); }
+    else if(tabAvtive == 2){  HapusPemasok();  }
+    else { HapusPengguna();}
 }
 
 function btnSimpan(selector){
-    if(tabActive == 0){
-        SimpanBarang();
-    }
+    var tabActive = getTabIndex();
+    if(tabActive == 0){ SimpanBarang(); }
+    else if(tabAvtive == 1){  SimpanKategori(); }
+    else if(tabAvtive == 2){  SimpanPemasok();  }
+    else { SimpanPengguna();}
 }
-
 
 </script>

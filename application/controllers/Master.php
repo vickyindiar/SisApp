@@ -28,17 +28,10 @@ class Master extends CI_Controller
         $result = $this->model->GetDataPemasok();
         echo json_encode($result);
     }
-
     function ShowDataUser(){
         $result = $this->model->GetDataUser();
         echo json_encode($result);
     }
-
-    function getDiff($ori, $new){
-        $result = array();
-        
-    }
-
 
     function DoInsertBarang(){
         $isIdExist = $this->model->GetDataBarang($this->input->post('kode_barang'));
@@ -76,11 +69,11 @@ class Master extends CI_Controller
         $msg['success'] =  false;
         if($result) $msg['success'] = true;
         else $msg['seuccess']  = false;
-        echo $msg;
+        echo json_encode($msg);
     }
 
-    function DoDeleteBarang($id){
-        $result = $this->model->DeleteDataBarang($id);
+    function DoDeleteBarang(){
+        $result = $this->model->DeleteDataBarang();
         $msg['success'] = false;
         if($result) $msg['success'] = true;
         else $msg['success'] = false; 
@@ -88,6 +81,25 @@ class Master extends CI_Controller
     }
 
 
+
+    function DoInsertKategori(){
+        $isIdExist = $this->model->GetDataKategori($this->input->post('kode_kategoribarang'));
+        $msg['success'] = false;
+            if(count($isIdExist) > 0){
+               $msg['success'] = false;
+               $this->session->set_flashdata('error', 'Kode Kategori Barang Sudah Ada, Silahkan Cek Tabel Barang Terlebih Dahulu !');            
+            }else{
+               $result =  $this->model->InsertDataBarang();              
+               if($result){
+                     $this->session->set_flashdata('success', 'Data Barang Berhasil Ditambah!');
+                     $msg['success'] = true;
+                }else{
+                    $this->session->set_flashdata('error', 'Gagal Menambah Data Barang, Kesalahan Pada Query Database !');   
+                    $msg['success'] = false;
+                }     
+            }    
+        echo json_encode($msg);
+    }
 }
 
 

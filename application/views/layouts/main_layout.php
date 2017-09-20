@@ -22,7 +22,8 @@
     <!-- Animation Css -->
     <link href="<?php echo base_url() ?>assets/plugins/animate-css/animate.css" rel="stylesheet" />
     <!-- Sweetalert Css -->
-    <link href="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?php echo base_url() ?>node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <!-- <link href="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert.css" rel="stylesheet" /> -->
     <!-- jqwidgets Css -->
     <link href="<?php echo base_url() ?>assets/plugins/jqwidgets/jqx.base.css" rel="stylesheet" />
     <link href="<?php echo base_url() ?>assets/plugins/jqwidgets/jqx.bootstrap.css" rel="stylesheet" />
@@ -93,6 +94,7 @@
     <script src="<?php echo base_url() ?>assets/plugins/jqwidgets/jqx-all.js"></script>
     <!-- SweetAlert Plugin Js -->
      <script src="<?php echo base_url() ?>assets/plugins/sweetalert/sweetalert.min.js"></script>
+     <script src="<?php echo base_url() ?>node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
     <!-- Custom Js -->
     <script src="<?php echo base_url() ?>assets/js/admin.js"></script>
     <script src="<?php echo base_url() ?>assets/js/pages/index.js"></script>
