@@ -25,6 +25,11 @@
                     </a>
                 </li>
                 <li role="presentation">
+                    <a href="#tab-master-pelanggan" data-toggle="tab">
+                        <i class="material-icons">people_outline</i> PELANGGAN
+                    </a>
+                </li>
+                <li role="presentation">
                     <a href="#tab-master-pengguna" data-toggle="tab">
                         <i class="material-icons">person_add</i> PENGGUNA
                     </a>
@@ -74,6 +79,18 @@
                         </div>
                     </div> 
                 </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab-master-pelanggan">
+                    <div class="btn-group" role="group" aria-label="Default button group" style="margin-bottom:10px">
+                        <button type="button" id="btn-tambah-pelanggan" class="btn bg-blue waves-effect" onclick="btnTambah('GridPelanggan')"><i class="material-icons">playlist_add</i><span> Tambah</span></button>
+                        <button type="button" id="btn-ubah-pelanggan" class="btn bg-green waves-effect"  onclick="btnUbah('GridPelanggan')"><i class="material-icons">border_color</i><span> Ubah</span></button>
+                        <button type="button" id="btn-hapus-pelanggan" class="btn bg-red waves-effect"  onclick="btnHapus('GridPelanggan')"><i class="material-icons">delete_forever</i><span> Hapus</span></button>
+                    </div>       
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div id="GridPelanggan"> </div>
+                        </div>
+                    </div> 
+                </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab-master-pengguna">
                     <div class="btn-group" role="group" aria-label="Default button group" style="margin-bottom:10px">
                         <button type="button" id="btn-tambah-pengguna" class="btn bg-blue waves-effect" onclick="btnTambah('GridPengguna')"><i class="material-icons">playlist_add</i><span> Tambah</span></button>
@@ -94,63 +111,57 @@
 <?php echo $barang_view; ?>
 <?php echo $kategori_view; ?>
 <?php echo $pemasok_view; ?>
+<?php echo $pelanggan_view; ?>
 <?php echo $pengguna_view; ?>
 
 
 <script>
 var StatusBtnSimpan;
-var conKategori, conPemasok;
+var conKategori, conPemasok, conAkses;
  $(function(){ $('#btn-group-simpan').hide(); });
-function SetintJson(objects){
-    for(var i = 0; i < objects.length; i++){
-        var obj = objects[i];
-        for(var prop in obj){
-            if(obj.hasOwnProperty(prop) && !isNaN(obj[prop])){
-                obj[prop] = +obj[prop];   
-            }
-        }
-        return objects;
-    }
-}
 
 function getTabIndex(){
- var tab = $('#tab-master'), active = tab.find('.tab-pane.active'), id = active.attr("id");
- if(id.indexOf('barang') > -1) return 0;
- else if(id.indexOf('kategori') > -1) return 1;
- else if(id.indexOf('pemasok') > -1) return 2;
- else if(id.indexOf('pengguna') > -1) return 3;
+    var tab = $('#tab-master'), active = tab.find('.tab-pane.active'), id = active.attr("id");
+    if(id.indexOf('barang') > -1) return 0;
+    else if(id.indexOf('kategori') > -1) return 1;
+    else if(id.indexOf('pemasok') > -1) return 2;
+    else if(id.indexOf('pelanggan') > -1) return 3;
+    else if(id.indexOf('pengguna') > -1) return 4;
 }
-
 
 function btnTambah(selector){  
     var tabActive = getTabIndex();
     if(tabActive == 0){  ModalTambahBarang(); }
-    else if(tabAvtive == 1){  ModalTambahKategori(); }
-    else if(tabAvtive == 2){  ModalTambahPemasok();  }
+    else if(tabActive == 1){  ModalTambahKategori(); }
+    else if(tabActive == 2){  ModalTambahPemasok();  }
+    else if(tabActive == 3){  ModalTambahPelanggan();  }
     else { ModalTambahPengguna();}
 }
 
 function btnUbah(selector){
     var tabActive = getTabIndex();
     if(tabActive == 0){ ModalUbahBarang(); }
-    else if(tabAvtive == 1){  ModalUbahKategori(); }
-    else if(tabAvtive == 2){  ModalUbahPemasok();  }
+    else if(tabActive == 1){  ModalUbahKategori(); }
+    else if(tabActive == 2){  ModalUbahPemasok();  }
+    else if(tabActive == 3){  ModalUbahPelanggan();  }
     else { ModalUbahPengguna();}
 }
 
 function btnHapus(selector){
     var tabActive = getTabIndex();
     if(tabActive == 0){ HapusBarang();}
-    else if(tabAvtive == 1){  HapusKategori(); }
-    else if(tabAvtive == 2){  HapusPemasok();  }
+    else if(tabActive == 1){  HapusKategori(); }
+    else if(tabActive == 2){  HapusPemasok();  }
+    else if(tabActive == 3){  HapusPelanggan();  }
     else { HapusPengguna();}
 }
 
 function btnSimpan(selector){
     var tabActive = getTabIndex();
     if(tabActive == 0){ SimpanBarang(); }
-    else if(tabAvtive == 1){  SimpanKategori(); }
-    else if(tabAvtive == 2){  SimpanPemasok();  }
+    else if(tabActive == 1){  SimpanKategori(); }
+    else if(tabActive == 2){  SimpanPemasok();  }
+    else if(tabActive == 2){  SimpanPelanggan();  }
     else { SimpanPengguna();}
 }
 

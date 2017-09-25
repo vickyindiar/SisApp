@@ -26,34 +26,37 @@
             <!-- #User Info -->
             <!-- Menu -->
             <div class="menu">
+                <div class="bg-leftmenu">
+                    <img src="<?php echo base_url() ?>assets/images/logo.png" width="250" height="250" alt="Client" />
+                </div>
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li class="active">
-                        <a href="index.html">
+                    <li class="<?php echo ismenuactive("home", $menu_active); ?>">
+                        <a href="<?php echo base_url();?>">
                             <i class="material-icons">home</i>
                             <span>Home</span>
                         </a>
                     </li>
-                     <li>
+                     <li class="<?php echo ismenuactive("master", $menu_active); ?>">
                         <a href="<?php echo base_url()?>Master">
                             <i class="material-icons">widgets</i>
                             <span>Master</span>
                         </a>
                     </li>
 
-                    <li>
+                    <li class="<?php echo ismenuactive("typo", $menu_active); ?>">
                         <a href="pages/typography.html">
                             <i class="material-icons">text_fields</i>
                             <span>Typography</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="<?php echo ismenuactive("layers", $menu_active); ?>">
                         <a href="pages/helper-classes.html">
                             <i class="material-icons">layers</i>
                             <span>Helper Classes</span>
                         </a>
                     </li>
-                    <li>
+                    <li class="<?php echo ismenuactive("widgets", $menu_active); ?>">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">widgets</i>
                             <span>Widgets</span>

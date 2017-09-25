@@ -1,9 +1,9 @@
-<div class="modal fade" id="pemasokModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="pelangganModal" tabindex="-1" role="dialog">
    <div class="modal-dialog" role="document">
-     <form id="form-pemasok" method="POST">
-        <div class="modal-content" id="modalPemasok-content">
+     <form id="form-pelanggan" method="POST" enctype="multipart/form-data">
+        <div class="modal-content" id="modalPelanggan-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="pemasokModalLabel"></h4>
+                <h4 class="modal-title" id="pelangganModalLabel"></h4>
             </div>
             <div class="modal-body">
               <div class="row clearfix">
@@ -12,15 +12,15 @@
                           <div class="body">                              
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="text" id="kode_pemasok" name="kode_pemasok" class="form-control">
-                                          <label class="form-label">Kode Pemasok</label>
+                                          <input type="text" id="kode_pelanggan" name="kode_pelanggan" class="form-control">
+                                          <label class="form-label">Kode Pelanggan</label>
                                       </div>
                                   </div>
 
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="text" id="nama_pemasok" name="nama_pemasok" class="form-control">
-                                          <label class="form-label">Nama Pemasok</label>
+                                          <input type="text" id="nama_pelanggan" name="nama_pelanggan" class="form-control">
+                                          <label class="form-label">Nama Pelanggan</label>
                                       </div>
                                   </div>
 
@@ -37,7 +37,6 @@
                                           <label class="form-label">Kota</label>
                                       </div>
                                   </div>
-
 
                                   <div class="form-group form-float">
                                       <div class="form-line">
@@ -58,7 +57,27 @@
                                           <input type="number" id="no_tlp2" name="no_tlp2" class="form-control">
                                           <label class="form-label">Tlp 2</label>
                                       </div>
-                                  </div>                                
+                                  </div>    
+                                  
+                                  <div class="form-group form-float">
+                                      <div class="form-line">
+                                          <input type="text" id="nama_toko_pelanggan" name="nama_toko_pelanggan" class="form-control">
+                                          <label class="form-label">Nama Toko Pelanggan</label>
+                                      </div>
+                                  </div>
+
+                                  
+                                  <div class="form-group form-float">
+                                      <div class="form-line">
+                                        <div class="dz-message">
+                                            <div class="drag-icon-cph"> <i class="material-icons">touch_app</i></div>
+                                            <h3>Drop files here or click to upload</h3>
+                                        </div>
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple  id="foto_pelanggan" name="foto_pelanggan"/>
+                                        </div>
+                                      </div>
+                                  </div>                            
                                                                                                                                 
                                   <div class="form-group form-float">
                                       <div class="form-line">
@@ -73,7 +92,7 @@
               </div>           
             </div>
             <div class="modal-footer js-sweetalert">
-                <button type="button" id="simpan" class="btn btn-primary btn-link waves-effect"  style="float:left; color:white" onclick="SimpanPemasok()" >Simpan</button>
+                <button type="button" id="simpan" class="btn btn-primary btn-link waves-effect"  style="float:left; color:white" onclick="SimpanPelanggan()" >Simpan</button>
                 <button type="button" class="btn btn-danger btn-link waves-effect" style="float:left; color:white" data-dismiss="modal">Batal</button>
             </div>
         </div>
@@ -82,41 +101,48 @@
 </div>
 
 
-
 <script>
 $(function(){
-            var getPemasok = {
+            var getPelanggan = {
               datatype: "json",
               datafields: [
-                {name : 'kode_pemasok'}, 
-                {name : 'nama_pemasok'},
+                {name : 'kode_pelanggan'}, 
+                {name : 'nama_pelanggan'},
                 {name :'alamat'},
                 {name :'kota'},
                 {name :'provinsi'},
                 {name :'no_tlp1', type:'number'},
                 {name :'no_tlp2', type:'number'},
+                {name :'nama_toko_pelanggan'},
+                {name :'foto_pelanggan'},
                 {name :'keterangan'},               
                 ],
-              url:'<?php echo base_url()?>Master/ShowDataPemasok',
+              url:'<?php echo base_url()?>Master/ShowDataPelanggan',
               pager: function (pagenum, pagesize, oldpagenum) {
                     // callback called when a page or page size is changed.
               }
             }
-            var dtPemasok = new $.jqx.dataAdapter(getPemasok); 
-            $("#GridPemasok").jqxGrid({
-                source : dtPemasok,
+            var pelanggan_imagerenderer = function (row, datafield, value) {
+                return '<img style="margin-left: 5px;" height="60" width="50" src="../../images/' + value + '"/>';
+            }
+            var dtPelanggan = new $.jqx.dataAdapter(getPelanggan); 
+            $("#GridPelanggan").jqxGrid({
+                source : dtPelanggan,
                 width : '100%',
                 theme: 'bootstrap',
+                columnsresize: true,
                 sortable: true,
                 pageable: true, 
                 columns : [
-                {text:'Kode Pemasok', datafield:'kode_pemasok', cellsalign:'center', align:'center'/*pinned:'true'*/},
-                {text:'Pemasok', datafield:'nama_pemasok', cellsalign:'center', align:'center'},   
+                {text:'#', datafield:'kode_pelanggan', cellsalign:'center', align:'center'/*pinned:'true'*/},
+                {text:'Pelanggan', datafield:'nama_pelanggan', cellsalign:'center', align:'center'},   
                 {text:'Alamat', datafield:'alamat', cellsalign:'center', align:'center'/*pinned:'true'*/},
                 {text:'Kota', datafield:'kota', cellsalign:'center', align:'center'},  
                 {text:'Provinsi', datafield:'provinsi', cellsalign:'center', align:'center'/*pinned:'true'*/},
                 {text:'No Tlp 1', datafield:'no_tlp1', cellsalign:'center', align:'center'},  
                 {text:'No Tlp 2', datafield:'no_tlp2', cellsalign:'center', align:'center'/*pinned:'true'*/},
+                {text:'Nama Toko/Usaha', datafield:'nama_toko_pelanggan', cellsalign:'center', align:'center'}, 
+                {text:'Foto', datafield: 'Image', width: 60, cellsrenderer: pelanggan_imagerenderer }, 
                 {text:'Keterangan', datafield:'keterangan', cellsalign:'center', align:'center'},              
                 ]
             });
@@ -124,25 +150,25 @@ $(function(){
 
 
 
-function ModalTambahPemasok(){
-    $("#pemasokModal").modal('show');
-    $("#form-pemasok")[0].reset();
-    $("#modalPemasok-content").find('.form-line').removeClass('focused');
-    $("#modalPemasok-content").find('.modal-title').text('TAMBAH DATA');
-    $("#form-pemasok").attr('action', '<?php echo base_url()?>Master/DoInsertPemasok');
+function ModalTambahPelanggan(){
+    $("#pelangganModal").modal('show');
+    $("#form-pelanggan")[0].reset();
+    $("#modalPelanggan-content").find('.form-line').removeClass('focused');
+    $("#modalPelanggan-content").find('.modal-title').text('TAMBAH DATA');
+    $("#form-pelanggan").attr('action', '<?php echo base_url()?>Master/DoInsertPelanggan');
     StatusBtnSimpan = 'tambah';    
 }
 
-function ModalUbahPemasok(e){
-   var rowindex = $('#GridPemasok').jqxGrid('getselectedrowindex');
+function ModalUbahPelanggan(e){
+   var rowindex = $('#GridPelanggan').jqxGrid('getselectedrowindex');
    if(rowindex == -1){
          swal('Pilih baris yang akan diubah terlebih dahulu !');
    }else{
-        $("#pemasokModal").modal('show');
-        $("#form-pemasok")[0].reset();
-        $("#modalPemasok-content").find('.modal-title').text('UBAH DATA');
-        var row = $("#GridPemasok").jqxGrid('getrowdata', rowindex);
-        var cols = $("#GridPemasok").jqxGrid('columns');
+        $("#pelangganModal").modal('show');
+        $("#form-pelanggan")[0].reset();
+        $("#modalPelanggan-content").find('.modal-title').text('UBAH DATA');
+        var row = $("#GridPelanggan").jqxGrid('getrowdata', rowindex);
+        var cols = $("#GridPelanggan").jqxGrid('columns');
         for(var i = 0; i<cols.records.length;i++){
             var fieldname = cols.records[i].datafield.toString();
             if(row[fieldname] != "" || null){
@@ -151,18 +177,18 @@ function ModalUbahPemasok(e){
                 $('input[name='+fieldname+']').val(row[fieldname]);
             }
         }
-        $("#form-pemasok").attr('action', '<?php echo base_url()?>Master/DoUpdatePemasok/'+ row['kode_pemasok']);
+        $("#form-pelanggan").attr('action', '<?php echo base_url()?>Master/DoUpdatePelanggan/'+ row['kode_pelanggan']);
         StatusBtnSimpan = 'ubah'; 
    } 
 }
 
-function HapusPemasok(){
-    var rowindex = $('#GridPemasok').jqxGrid('getselectedrowindex');
+function HapusPelanggan(){
+    var rowindex = $('#GridPelanggan').jqxGrid('getselectedrowindex');
    if(rowindex == -1){
          swal('Pilih baris yang akan dihapus terlebih dahulu !');
    }else{
-        var row = $("#GridPemasok").jqxGrid('getrowdata', rowindex);
-        var rID = row['kode_pemasok'];
+        var row = $("#GridPelanggan").jqxGrid('getrowdata', rowindex);
+        var rID = row['kode_pelanggan'];
         swal({
             title: 'Yakin Hapus Data ?',
             text: "Data Tidak Bisa Dikembalikan Jika Sudah Dihapus !",
@@ -175,26 +201,26 @@ function HapusPemasok(){
                 $.ajax({
                     type: 'ajax',
                     method: 'get',
-                    url: '<?php echo base_url() ?>Master/DoDeletePemasok',
+                    url: '<?php echo base_url() ?>Master/DoDeletePelanggan',
                     data : {id : rID},
                     dataType: "json",
                     success: function(response){
-                         swal({  title: "Good job!",  text: "Data Pemasok Berhasil DiHapus !", type: "success", timer: 1000, showConfirmButton: false }); 
-                         $('#GridPemasok').jqxGrid('updatebounddata');     
+                         swal({  title: "Good job!",  text: "Data Pelanggan Berhasil DiHapus !", type: "success", timer: 1000, showConfirmButton: false }); 
+                         $('#GridPelanggan').jqxGrid('updatebounddata');     
                     },
                     error: function(response){
-                         swal({ title: "Lapor Admin !", text: "Data Pemasok Gagal DiHapus ! (error ajax)", type: "error", timer: 2000, showConfirmButton: true });
+                         swal({ title: "Lapor Admin !", text: "Data Pelanggan Gagal DiHapus ! (error ajax)", type: "error", timer: 2000, showConfirmButton: true });
                     }       
                 });
         });
    }
 }
 
-function SimpanPemasok(){
-    var url = $("#form-pemasok").attr('action');
-    var data = $("#form-pemasok").serialize();
+function SimpanPelanggan(){
+    var url = $("#form-pelanggan").attr('action');
+    var data = $("#form-pelanggan").serialize();
     var statAction = StatusBtnSimpan == 'tambah'  ? 'Ditambahkan' : 'Diubah';
-    $("#pemasokModal").modal('hide');
+    $("#pelangganModal").modal('hide');
     $.ajax({
         type: "POST",
         url: url,
@@ -202,19 +228,19 @@ function SimpanPemasok(){
         dataType: "json",
         success: function (response) {
             if(response.success){
-                $("#form-pemasok")[0].reset();
+                $("#form-pelanggan")[0].reset();
                 swal({
                         title: "Good job!", 
-                        text: "Data Pemasok Berhasil "  + statAction + " !",        
+                        text: "Data Pelanggan Berhasil "  + statAction + " !",        
                         type: "success",
                         timer: 1000,
                         showConfirmButton: false
                 });
-                $('#GridPemasok').jqxGrid('updatebounddata');
+                $('#GridPelanggan').jqxGrid('updatebounddata');
             }else{
                 swal({
                         title: "Cek Kembali !", 
-                        text: "Data Pemasok Gagal "  + statAction + " ! (error response)",        
+                        text: "Data Pelanggan Gagal "  + statAction + " ! (error response)",        
                         type: "error",
                         timer: 2000,
                         showConfirmButton: true
@@ -224,7 +250,7 @@ function SimpanPemasok(){
         error: function(){
                 swal({
                         title: "Lapor Admin !", 
-                        text: "Data Pemasok Gagal "  + statAction + " ! (error ajax)",        
+                        text: "Data Pelanggan Gagal "  + statAction + " ! (error ajax)",        
                         type: "error",
                         timer: 2000,
                         showConfirmButton: true

@@ -8,8 +8,9 @@ class Home extends CI_Controller
     }
     
     function index(){
+        $data['menu_active'] = 'home';
         $this->template->set("title", "Home");
-        $this->template->load("main_layout","contents","home");
+        $this->template->load("main_layout","contents","home", $data);
     }
     
 }

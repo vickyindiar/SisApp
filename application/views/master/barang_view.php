@@ -103,7 +103,8 @@ $(function(){
                 datatype: 'json',
                 datafields:[
                 {name :'kode_kategoribarang', type: 'string'},
-                {name: 'nama_kategori', type: 'string'}],
+                {name: 'nama_kategori', type: 'string'},
+                {name: 'keterangan', type: 'string'}],
                 id: 'kode_kategoribarang',
                 url: '<?php echo base_url() ?>Master/ShowDataKategori',
                 async: false
@@ -167,13 +168,13 @@ $(function(){
                 {text:'Pemasok', datafield:'kode_pemasok', displayfield: 'pemasokbarang', cellsalign:'center', align:'center'}
                 ],
             });
-            $("#GridBarang").on('cellselect', function (event) {
-                var column = $("#GridBarang").jqxGrid('getcolumn', event.args.datafield);
-                var value = $("#GridBarang").jqxGrid('getcellvalue', event.args.rowindex, column.datafield);
-                var displayValue = $("#GridBarang").jqxGrid('getcellvalue', event.args.rowindex, column.displayfield);
+            // $("#GridBarang").on('cellselect', function (event) {
+            //     var column = $("#GridBarang").jqxGrid('getcolumn', event.args.datafield);
+            //     var value = $("#GridBarang").jqxGrid('getcellvalue', event.args.rowindex, column.datafield);
+            //     var displayValue = $("#GridBarang").jqxGrid('getcellvalue', event.args.rowindex, column.displayfield);
 
-                $("#eventLog").html("<div>Selected Cell<br/>Row: " + event.args.rowindex + ", Column: " + column.text + ", Value: " + value + ", Label: " + displayValue + "</div>");
-            });
+            //     $("#eventLog").html("<div>Selected Cell<br/>Row: " + event.args.rowindex + ", Column: " + column.text + ", Value: " + value + ", Label: " + displayValue + "</div>");
+            // });
 
          //===========> GridSelectKategori
         function btnOkKategori(){
@@ -213,11 +214,12 @@ $(function(){
          }); 
          var TempContentKategori = '<div style="position: relative; margin-left:3px; margin-top: 5px;">' + 'Pilih Kategori' +'</div>';
          $("#dropdownKategori").jqxDropDownButton('setContent', TempContentKategori);
+       
 
 
            //===========> GridSelectPemasok
         function btnOkPemasok(){
-            var element = $("<div style='float: right; margin-left:10px  margin-top:2px' ></div>");
+            var element = $("<div style='float: right; margin-right:10px  margin-top:2px' ></div>");
             var okbtn = $("<div style='padding: 0px; float: left; margin-right: 10px;'><div style='margin-left: 7px; width: 16px; height: 16px;'>OK</div></div>");
             okbtn.width(36);
             okbtn.jqxButton({ theme: 'bootstrap', template:'primary' });
@@ -230,7 +232,7 @@ $(function(){
         }
         $("#SelectPemasok").jqxGrid({
               source : dtPemasokAdapter,
-              width: '100%',
+              width: 250,
               theme: 'bootstrap',
               columnsresize: true,
               pageable: true,    
@@ -256,6 +258,8 @@ $(function(){
 
 });
 
+$('#dropdownKategori').on('open', function () { $('#SelectKategori').jqxGrid('updatebounddata'); }); 
+$('#dropdownPemasok').on('open', function () { $('#SelectPemasok').jqxGrid('updatebounddata'); });
 
 function ModalTambahBarang(){
     $("#barangModal").modal('show');
@@ -310,7 +314,7 @@ function ModalUbahBarang(e){
 function HapusBarang(){
     var rowindex = $('#GridBarang').jqxGrid('getselectedrowindex');
    if(rowindex == -1){
-         swal('Pilih baris yang akan diubah terlebih dahulu !');
+         swal('Pilih baris yang akan dihapus terlebih dahulu !');
    }else{
         var row = $("#GridBarang").jqxGrid('getrowdata', rowindex);
         var rID = row['kode_barang'];

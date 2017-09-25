@@ -41,6 +41,21 @@
         padding: 0 !important;
         margin: 0 !important;
     }
+    .menu {
+        position: relative;
+        z-index: 1;
+    }
+
+    .bg-leftmenu {
+        position: absolute;
+        z-index: -1;
+        top: 400px;
+        left:20px;
+        opacity: .3;
+        width: 30%;
+        height: 30%;
+        /*transform: rotate(-50deg);*/
+    }
     </style>    
 </head>
 
