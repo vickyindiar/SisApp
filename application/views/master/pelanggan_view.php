@@ -64,20 +64,7 @@
                                           <input type="text" id="nama_toko_pelanggan" name="nama_toko_pelanggan" class="form-control">
                                           <label class="form-label">Nama Toko Pelanggan</label>
                                       </div>
-                                  </div>
-
-                                  
-                                  <div class="form-group form-float">
-                                      <div class="form-line">
-                                        <div class="dz-message">
-                                            <div class="drag-icon-cph"> <i class="material-icons">touch_app</i></div>
-                                            <h3>Drop files here or click to upload</h3>
-                                        </div>
-                                        <div class="fallback">
-                                            <input name="file" type="file" multiple  id="foto_pelanggan" name="foto_pelanggan"/>
-                                        </div>
-                                      </div>
-                                  </div>                            
+                                  </div>                          
                                                                                                                                 
                                   <div class="form-group form-float">
                                       <div class="form-line">
@@ -85,6 +72,12 @@
                                           <label class="form-label">Keterangan</label>
                                       </div>
                                   </div>
+
+                                  <div class="form-group form-float">
+                                      <div class="form-line">
+                                            <input type="file" id="foto_pelanggan" name="foto_pelanggan"/>
+                                      </div>
+                                  </div>  
                                                                                      
                           </div>
                       </div>
@@ -123,12 +116,13 @@ $(function(){
               }
             }
             var pelanggan_imagerenderer = function (row, datafield, value) {
-                return '<img style="margin-left: 5px;" height="60" width="50" src="../../images/' + value + '"/>';
+                return '<img style="margin-left: 5px;" height="60" width="50" src="http://localhost/SisApp/assets/images/foto_pelanggan/' + value + '"/>';
             }
             var dtPelanggan = new $.jqx.dataAdapter(getPelanggan); 
             $("#GridPelanggan").jqxGrid({
                 source : dtPelanggan,
                 width : '100%',
+                rowsheight: 60,
                 theme: 'bootstrap',
                 columnsresize: true,
                 sortable: true,
@@ -142,7 +136,7 @@ $(function(){
                 {text:'No Tlp 1', datafield:'no_tlp1', cellsalign:'center', align:'center'},  
                 {text:'No Tlp 2', datafield:'no_tlp2', cellsalign:'center', align:'center'/*pinned:'true'*/},
                 {text:'Nama Toko/Usaha', datafield:'nama_toko_pelanggan', cellsalign:'center', align:'center'}, 
-                {text:'Foto', datafield: 'Image', width: 60, cellsrenderer: pelanggan_imagerenderer }, 
+                {text:'Foto', datafield: 'foto_pelanggan', width: 60, cellsrenderer: pelanggan_imagerenderer }, 
                 {text:'Keterangan', datafield:'keterangan', cellsalign:'center', align:'center'},              
                 ]
             });
@@ -218,7 +212,7 @@ function HapusPelanggan(){
 
 function SimpanPelanggan(){
     var url = $("#form-pelanggan").attr('action');
-    var data = $("#form-pelanggan").serialize();
+    var data = new FormData($(this)[0]);
     var statAction = StatusBtnSimpan == 'tambah'  ? 'Ditambahkan' : 'Diubah';
     $("#pelangganModal").modal('hide');
     $.ajax({

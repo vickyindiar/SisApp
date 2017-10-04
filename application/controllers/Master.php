@@ -167,7 +167,22 @@ class Master extends CI_Controller
                $msg['success'] = false;
                $this->session->set_flashdata('error', 'Data Pelanggan Sudah Ada, Silahkan Cek Tabel Pelanggan Terlebih Dahulu !');            
             }else{
-               $result =  $this->model->InsertDataPelanggan();              
+                $file = print_r($_FILES);
+                $config['upload_path'] = './uploads/';
+                $config['allowed_types'] = 'jpg|png';
+                $config['max_size'] = '500';
+                $config['max_width'] = '1024';
+                $config['max_height'] = '768';
+                $img = "foto_pelanggan";
+                $this->load->library('upload', $config);
+                if( ! $this->upload->do_upload($img) ){
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->index($error);
+                }else{
+                    $nama_foto = $this->upload->data('file_name');
+                    $result =  $this->model->InsertDataPelanggan($nama_foto);   
+                }
+           
                if($result){
                      $this->session->set_flashdata('success', 'Data Pelanggan Berhasil Ditambah!');
                      $msg['success'] = true;

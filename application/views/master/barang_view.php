@@ -153,7 +153,6 @@ $(function(){
               sortable: true,
               pageable: true,    
               //autoheight: true,         
-              // /columnsresize: true,
               pagermode: 'simple',
               editable: false,
               selectionmode: 'singlerow',      

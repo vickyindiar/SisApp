@@ -81,7 +81,7 @@ $(function(){
                     {name:"username"},
                     {name:"password"},
                     {nama:"id_akses"},
-                    {nama:"levelakses", value:'id_akses', values : { source:dtAkses.records, value: 'id_akses', name:'label'}}
+                    {nama:"levelakses", value:'id_akses', values : { source:dtAkses.records, value: 'id_akses', name:'level_akses'}}
                 ],
                 url:'<?php echo base_url()?>Master/ShowDataUser' 
             }

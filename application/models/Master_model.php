@@ -174,7 +174,7 @@ class Master_model extends CI_Model{
         }
     }
 
-    function InsertDataPelanggan(){
+    function InsertDataPelanggan($namafile){
         $data = array(
             'kode_pelanggan' => ucwords($this->input->post('kode_pelanggan')),
             'nama_pelanggan' => ucwords($this->input->post('nama_pelanggan')),
@@ -185,7 +185,7 @@ class Master_model extends CI_Model{
             'no_tlp1' => $this->input->post('no_tlp1'),
             'no_tlp2' => $this->input->post('no_tlp2'),
             'nama_toko_pelanggan' => $this->input->post('nama_toko_pelanggan'),
-            'foto_pelanggan' => $this->input->post('nama_foto_pelanggan'),
+            'foto_pelanggan' => $namafile,
             'keterangan' => ucwords($this->input->post('keterangan'))
             );
         $this->db->insert('pelanggan', $data);
