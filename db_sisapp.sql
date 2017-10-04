@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 20, 2017 at 12:13 PM
+-- Generation Time: Oct 04, 2017 at 02:12 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.0.15
 
@@ -19,6 +19,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_sisapp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `akses`
+--
+
+CREATE TABLE `akses` (
+  `id_akses` int(5) NOT NULL,
+  `label` varchar(50) NOT NULL,
+  `level_akses` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `akses`
+--
+
+INSERT INTO `akses` (`id_akses`, `label`, `level_akses`) VALUES
+(1, 'super_admin', 'Super Administrasi'),
+(2, 'admin', 'Administrasi'),
+(3, 'kasir', 'Kasir'),
+(4, 'inventory', 'Staff Inventory'),
+(5, 'keuangan', 'Staff Keuangan');
 
 -- --------------------------------------------------------
 
@@ -63,7 +86,35 @@ CREATE TABLE `kategori` (
 
 INSERT INTO `kategori` (`kode_kategoribarang`, `nama_kategori`, `keterangan`) VALUES
 ('prd', 'Pria Dewa', NULL),
-('skl', 'Sekolah', NULL);
+('skl', 'Sekolah', NULL),
+('Wnd', 'Wanita Dewasa', 'tidak ada keterangan');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pelanggan`
+--
+
+CREATE TABLE `pelanggan` (
+  `kode_pelanggan` int(10) NOT NULL,
+  `nama_pelanggan` varchar(100) NOT NULL,
+  `alamat` text NOT NULL,
+  `kota` varchar(100) DEFAULT NULL,
+  `provinsi` varchar(50) DEFAULT NULL,
+  `tgl_terdaftar` date NOT NULL,
+  `no_tlp1` varchar(15) DEFAULT NULL,
+  `no_tlp2` varchar(15) DEFAULT NULL,
+  `nama_toko_pelanggan` varchar(100) DEFAULT NULL,
+  `foto_pelanggan` varchar(225) DEFAULT NULL,
+  `keterangan` varchar(225) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pelanggan`
+--
+
+INSERT INTO `pelanggan` (`kode_pelanggan`, `nama_pelanggan`, `alamat`, `kota`, `provinsi`, `tgl_terdaftar`, `no_tlp1`, `no_tlp2`, `nama_toko_pelanggan`, `foto_pelanggan`, `keterangan`) VALUES
+(1, 'Vicky Indiarto', 'Jalan raya pasar babelan', 'Bekasi', 'Jawa Barat', '2017-09-25', '085782860370', NULL, 'Griya Asri', 'vicky.jpg', 'biasa belanja bs');
 
 -- --------------------------------------------------------
 
@@ -96,22 +147,29 @@ INSERT INTO `pemasok` (`kode_pemasok`, `nama_pemasok`, `alamat`, `kota`, `provin
 --
 
 CREATE TABLE `user` (
-  `iduser` varchar(10) NOT NULL,
+  `id_user` int(5) NOT NULL,
   `username` varchar(200) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `level` varchar(10) NOT NULL
+  `password` varchar(255) DEFAULT NULL,
+  `foto` varchar(255) DEFAULT NULL,
+  `id_akses` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`iduser`, `username`, `password`, `level`) VALUES
-('adm1', 'admin', 'admin', '1');
+INSERT INTO `user` (`id_user`, `username`, `password`, `foto`, `id_akses`) VALUES
+(1, 'vicky', 'admin', 'vicky.jpg', 1);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `akses`
+--
+ALTER TABLE `akses`
+  ADD PRIMARY KEY (`id_akses`);
 
 --
 -- Indexes for table `barang`
@@ -129,6 +187,12 @@ ALTER TABLE `kategori`
   ADD PRIMARY KEY (`kode_kategoribarang`);
 
 --
+-- Indexes for table `pelanggan`
+--
+ALTER TABLE `pelanggan`
+  ADD PRIMARY KEY (`kode_pelanggan`);
+
+--
 -- Indexes for table `pemasok`
 --
 ALTER TABLE `pemasok`
@@ -138,8 +202,23 @@ ALTER TABLE `pemasok`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`iduser`);
+  ADD PRIMARY KEY (`id_user`),
+  ADD KEY `user_ibfk_1` (`id_akses`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `akses`
+--
+ALTER TABLE `akses`
+  MODIFY `id_akses` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
@@ -150,6 +229,12 @@ ALTER TABLE `user`
 ALTER TABLE `barang`
   ADD CONSTRAINT `barang_ibfk_1` FOREIGN KEY (`kode_pemasok`) REFERENCES `pemasok` (`kode_pemasok`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `barang_ibfk_2` FOREIGN KEY (`kode_kategoribarang`) REFERENCES `kategori` (`kode_kategoribarang`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_akses`) REFERENCES `akses` (`id_akses`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
