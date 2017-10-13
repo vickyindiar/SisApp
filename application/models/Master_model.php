@@ -8,9 +8,27 @@ class Master_model extends CI_Model{
         $query = $where != null ?  $query."WHERE kode_barang = '$where'" : $query;
         return $this->db->query($query)->result();
     }
+
+    function GetJoinDataBarang(){
+        $query = "	
+        SELECT 
+        a.`kode_barang`, a.`nama_barang`, a.`harga_beli`, a.`harga_jual`, a.`warna_barang`, a.`stok`,
+        p.`kode_pemasok`, k.`kode_kategoribarang`, s.`kode_satuan` 
+        FROM barang AS a
+        LEFT JOIN kategori AS k ON a.`kode_kategoribarang` = k.`kode_kategoribarang`
+        LEFT JOIN pemasok AS p ON a.`kode_pemasok` = p.`kode_pemasok`
+        LEFT JOIN satuan AS s ON a.`kode_satuan` = s.`kode_satuan`
+        ";
+        return $this->db->query($query)->result();
+    }
     function GetDataKategori($where = null){
         $query = "SELECT * FROM kategori ";
         $where != null ? $query = $query."WHERE kode_kategoribarang = '$where'" : $query;
+        return $this->db->query($query)->result();
+    }
+    function GetDataSatuan($where = null){
+        $query = "SELECT * FROM satuan ";
+        $where != null ? $query = $query."WHERE kode_satuan = '$where'" : $query;
         return $this->db->query($query)->result();
     }
     function GetDataPemasok($where = null){
@@ -25,6 +43,12 @@ class Master_model extends CI_Model{
     }
     function GetDataUser($where = null){
         $query = "SELECT * FROM user ";
+        $where != null ? $query = $query."WHERE id_user = '$where'" : $query;
+        return $this->db->query($query)->result();
+    }
+    function GetDataUserAkses($where = null){
+        $query = "SELECT user.`id_user`, user.`username`, user.`password`, user.`foto`, user.`id_akses`, akses.`level_akses` 
+        FROM user LEFT JOIN akses ON user.`id_akses` = akses.`id_akses`  ";
         $where != null ? $query = $query."WHERE id_user = '$where'" : $query;
         return $this->db->query($query)->result();
     }
@@ -176,17 +200,16 @@ class Master_model extends CI_Model{
 
     function InsertDataPelanggan($namafile){
         $data = array(
-            'kode_pelanggan' => ucwords($this->input->post('kode_pelanggan')),
             'nama_pelanggan' => ucwords($this->input->post('nama_pelanggan')),
-            'alamat' => ucwords($this->input->post('alamat')),
-            'kota' => ucwords($this->input->post('kota')),
-            'provinsi' => ucwords($this->input->post('provinsi')),
-            'tgl_terdaftar' => $this->input->post('tgl_terdaftar'),
-            'no_tlp1' => $this->input->post('no_tlp1'),
-            'no_tlp2' => $this->input->post('no_tlp2'),
+            'alamat_pelanggan' => ucwords($this->input->post('alamat_pelanggan')),
+            'kota_pelanggan' => ucwords($this->input->post('kota_pelanggan')),
+            'provinsi_pelanggan' => ucwords($this->input->post('provinsi_pelanggan')),
+            'tgl_terdaftar_pelanggan' => $this->input->post('tgl_terdaftar_pelanggan'),
+            'no_tlp1_pelanggan' => $this->input->post('no_tlp1_pelanggan'),
+            'no_tlp2_pelanggan' => $this->input->post('no_tlp2_pelanggan'),
             'nama_toko_pelanggan' => $this->input->post('nama_toko_pelanggan'),
             'foto_pelanggan' => $namafile,
-            'keterangan' => ucwords($this->input->post('keterangan'))
+            'keterangan' => ucwords($this->input->post('keterangan_pelanggan'))
             );
         $this->db->insert('pelanggan', $data);
         if($this->db->affected_rows() > 0 ){
@@ -196,19 +219,18 @@ class Master_model extends CI_Model{
         }
     }
 
-    function UpdateDataPelanggan($id){      
+    function UpdateDataPelanggan($id, $namafile_baru){      
         $data = array(
-            'kode_pelanggan' => ucwords($this->input->post('kode_pelanggan')),
             'nama_pelanggan' => ucwords($this->input->post('nama_pelanggan')),
-            'alamat' => ucwords($this->input->post('alamat')),
-            'kota' => ucwords($this->input->post('kota')),
-            'provinsi' => ucwords($this->input->post('provinsi')),
-            'tgl_terdaftar' => $this->input->post('tgl_terdaftar'),
-            'no_tlp1' => $this->input->post('no_tlp1'),
-            'no_tlp2' => $this->input->post('no_tlp2'),
+            'alamat_pelanggan' => ucwords($this->input->post('alamat_pelanggan')),
+            'kota_pelanggan' => ucwords($this->input->post('kota_pelanggan')),
+            'provinsi_pelanggan' => ucwords($this->input->post('provinsi_pelanggan')),
+            'tgl_terdaftar_pelanggan' => $this->input->post('tgl_terdaftar_pelanggan'),
+            'no_tlp1_pelanggan' => $this->input->post('no_tlp1_pelanggan'),
+            'no_tlp2_pelanggan' => $this->input->post('no_tlp2_pelanggan'),
             'nama_toko_pelanggan' => $this->input->post('nama_toko_pelanggan'),
-            'foto_pelanggan' => $this->input->post('nama_foto_pelanggan'),
-            'keterangan' => ucwords($this->input->post('keterangan'))
+            'foto_pelanggan' => $namafile_baru,
+            'keterangan_pelanggan' => ucwords($this->input->post('keterangan_pelanggan'))
         );
         $this->db->where('kode_pelanggan', $id);
         $this->db->update('pelanggan', $data);
@@ -230,12 +252,13 @@ class Master_model extends CI_Model{
         }
     }
 
-    function InsertDataUser(){
+    function InsertDataUser($nama_foto){
         $data = array(
             'id_user' => $this->input->post('id_user'),
             'username' => $this->input->post('username'),
             'password' => md5($this->input->post('password')),           
             'id_akses' => $this->input->post('id_akses'),    
+            'foto' => $nama_foto
         );
         $this->db->insert('user', $data);
         if($this->db->affected_rows() > 0 ){

@@ -51,7 +51,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div id="GridBarang">  </div>
-                            <div style="font-size: 13px; margin-top: 20px; font-family: Verdana, Geneva, DejaVu Sans, sans-serif;" id="eventLog"></div>
+                            
                         </div>
                     </div> 
                 </div>
@@ -99,8 +99,9 @@
                     </div>       
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
-                        <div id="GridPengguna"></div>
-                     </div>
+                             <div id="GridPengguna"></div>   
+                             <div style="font-size: 13px; margin-top: 20px; font-family: Verdana, Geneva, DejaVu Sans, sans-serif;" id="eventLog"></div>
+                        </div>
                     </div>                  
                 </div>
             </div>
@@ -117,7 +118,7 @@
 
 <script>
 var StatusBtnSimpan;
-var conKategori, conPemasok, conAkses;
+var conKategori, conPemasok, conSatuan, conAkses;
  $(function(){ $('#btn-group-simpan').hide(); });
 
 function getTabIndex(){

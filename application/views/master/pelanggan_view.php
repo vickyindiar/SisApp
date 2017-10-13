@@ -1,6 +1,7 @@
 <div class="modal fade" id="pelangganModal" tabindex="-1" role="dialog">
    <div class="modal-dialog" role="document">
-     <form id="form-pelanggan" method="POST" enctype="multipart/form-data">
+     <!-- <form id="form-pelanggan" method="POST" enctype="multipart/form-data"> -->
+     <?php echo form_open_multipart('', array('id'=>'form-pelanggan', 'method'=>'POST'));?>
         <div class="modal-content" id="modalPelanggan-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="pelangganModalLabel"></h4>
@@ -12,13 +13,6 @@
                           <div class="body">                              
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="text" id="kode_pelanggan" name="kode_pelanggan" class="form-control">
-                                          <label class="form-label">Kode Pelanggan</label>
-                                      </div>
-                                  </div>
-
-                                  <div class="form-group form-float">
-                                      <div class="form-line">
                                           <input type="text" id="nama_pelanggan" name="nama_pelanggan" class="form-control">
                                           <label class="form-label">Nama Pelanggan</label>
                                       </div>
@@ -26,38 +20,41 @@
 
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="text" id="alamat" name="alamat" class="form-control">
+                                          <input type="text" id="alamat_pelanggan" name="alamat_pelanggan" class="form-control">
                                           <label class="form-label">Alamat</label>
                                       </div>
                                   </div>
                                   
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="text" id="kota" name="kota" class="form-control">
+                                          <input type="text" id="kota_pelanggan" name="kota_pelanggan" class="form-control">
                                           <label class="form-label">Kota</label>
                                       </div>
                                   </div>
 
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="text" id="provinsi" name="provinsi" class="form-control">
+                                          <input type="text" id="provinsi_pelanggan" name="provinsi_pelanggan" class="form-control">
                                           <label class="form-label">Provinsi</label>
                                       </div>
                                   </div>
 
                                  <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="number" id="no_tlp1" name="no_tlp1" class="form-control">
+                                          <input type="number" id="no_tlp1_pelanggan" name="no_tlp1_pelanggan" class="form-control">
                                           <label class="form-label">Tlp 1</label>
                                       </div>
                                   </div>
 
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="number" id="no_tlp2" name="no_tlp2" class="form-control">
+                                          <input type="number" id="no_tlp2_pelanggan" name="no_tlp2_pelanggan" class="form-control">
                                           <label class="form-label">Tlp 2</label>
                                       </div>
                                   </div>    
+      
+                                 <input type="hidden" class="datepicker form-control" id="tgl_terdaftar" name="tgl_terdaftar"placeholder="Please choose a date...">
+
                                   
                                   <div class="form-group form-float">
                                       <div class="form-line">
@@ -68,14 +65,14 @@
                                                                                                                                 
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                          <input type="text" id="keterangan" name="keterangan" class="form-control">
+                                          <input type="text" id="keterangan_pelanggan" name="keterangan_pelanggan" class="form-control">
                                           <label class="form-label">Keterangan</label>
                                       </div>
                                   </div>
 
                                   <div class="form-group form-float">
                                       <div class="form-line">
-                                            <input type="file" id="foto_pelanggan" name="foto_pelanggan"/>
+                                            <input type="file" name="foto_pelanggan" id="foto_pelanggan"/>
                                       </div>
                                   </div>  
                                                                                      
@@ -101,14 +98,16 @@ $(function(){
               datafields: [
                 {name : 'kode_pelanggan'}, 
                 {name : 'nama_pelanggan'},
-                {name :'alamat'},
-                {name :'kota'},
-                {name :'provinsi'},
-                {name :'no_tlp1', type:'number'},
-                {name :'no_tlp2', type:'number'},
+                {name :'alamat_pelanggan'},
+                {name :'kota_pelanggan'},
+                {name :'provinsi_pelanggan'},
+                {name :'tgl_terdaftar_pelanggan'},
+                {name :'no_tlp1_pelanggan', type:'number'},
+                {name :'no_tlp2_pelanggan', type:'number'},
+                {name :'tgl_terdaftar_pelanggan', type: 'date'},
                 {name :'nama_toko_pelanggan'},
                 {name :'foto_pelanggan'},
-                {name :'keterangan'},               
+                {name :'keterangan_pelanggan'},               
                 ],
               url:'<?php echo base_url()?>Master/ShowDataPelanggan',
               pager: function (pagenum, pagesize, oldpagenum) {
@@ -130,18 +129,27 @@ $(function(){
                 columns : [
                 {text:'#', datafield:'kode_pelanggan', cellsalign:'center', align:'center'/*pinned:'true'*/},
                 {text:'Pelanggan', datafield:'nama_pelanggan', cellsalign:'center', align:'center'},   
-                {text:'Alamat', datafield:'alamat', cellsalign:'center', align:'center'/*pinned:'true'*/},
-                {text:'Kota', datafield:'kota', cellsalign:'center', align:'center'},  
-                {text:'Provinsi', datafield:'provinsi', cellsalign:'center', align:'center'/*pinned:'true'*/},
-                {text:'No Tlp 1', datafield:'no_tlp1', cellsalign:'center', align:'center'},  
-                {text:'No Tlp 2', datafield:'no_tlp2', cellsalign:'center', align:'center'/*pinned:'true'*/},
+                {text:'Alamat', datafield:'alamat_pelanggan', cellsalign:'center', align:'center'/*pinned:'true'*/},
+                {text:'Kota', datafield:'kota_pelanggan', cellsalign:'center', align:'center'},  
+                {text:'Provinsi', datafield:'provinsi_pelanggan', cellsalign:'center', align:'center'/*pinned:'true'*/},
+                {text:'No Tlp 1', datafield:'no_tlp1_pelanggan', cellsalign:'center', align:'center'},  
+                {text:'No Tlp 2', datafield:'no_tlp2_pelanggan', cellsalign:'center', align:'center'/*pinned:'true'*/},
+                {text:'Terdaftar', datafield:'tgl_terdaftar_pelanggan', cellsalign:'center', align:'center', cellsformat: 'dd-MM-yyyy'/*pinned:'true'*/},
                 {text:'Nama Toko/Usaha', datafield:'nama_toko_pelanggan', cellsalign:'center', align:'center'}, 
                 {text:'Foto', datafield: 'foto_pelanggan', width: 60, cellsrenderer: pelanggan_imagerenderer }, 
-                {text:'Keterangan', datafield:'keterangan', cellsalign:'center', align:'center'},              
+                {text:'Keterangan', datafield:'keterangan_pelanggan', cellsalign:'center', align:'center'},              
                 ]
             });
 });
-
+function getTglTerdaftar(){
+    var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var output = d.getFullYear() + '-' +
+        ((''+month).length<2 ? '0' : '') + month + '-' +
+        ((''+day).length<2 ? '0' : '') + day;
+    return output;
+}
 
 
 function ModalTambahPelanggan(){
@@ -149,6 +157,7 @@ function ModalTambahPelanggan(){
     $("#form-pelanggan")[0].reset();
     $("#modalPelanggan-content").find('.form-line').removeClass('focused');
     $("#modalPelanggan-content").find('.modal-title').text('TAMBAH DATA');
+    $('input[name=tgl_terdaftar]').val(getTglTerdaftar());
     $("#form-pelanggan").attr('action', '<?php echo base_url()?>Master/DoInsertPelanggan');
     StatusBtnSimpan = 'tambah';    
 }
@@ -212,14 +221,19 @@ function HapusPelanggan(){
 
 function SimpanPelanggan(){
     var url = $("#form-pelanggan").attr('action');
-    var data = new FormData($(this)[0]);
+   // var data = $("#form-pelanggan").serialize();
+    var formData = new FormData($("#form-pelanggan")[0]);
     var statAction = StatusBtnSimpan == 'tambah'  ? 'Ditambahkan' : 'Diubah';
     $("#pelangganModal").modal('hide');
     $.ajax({
         type: "POST",
         url: url,
-        data: data,
+        data: formData,
         dataType: "json",
+        async : false,
+            cache : false,
+            contentType : false,
+            processData : false,
         success: function (response) {
             if(response.success){
                 $("#form-pelanggan")[0].reset();

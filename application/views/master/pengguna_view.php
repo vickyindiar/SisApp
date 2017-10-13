@@ -1,6 +1,6 @@
 <div class="modal fade" id="penggunaModal" tabindex="-1" role="dialog">
    <div class="modal-dialog" role="document">
-     <form id="form-pengguna" method="POST">
+     <form id="form-pengguna" method="POST" enctype="multipart/form-data">
         <div class="modal-content" id="modalPengguna-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="penggunaModalLabel"></h4>
@@ -31,8 +31,8 @@
                                       </div>
                                   </div>
                                 
-                                  <div class="row">
-                                    <div class="col-sm-6">
+                                <div class="row">
+                                    <div class="col-sm-12">
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                               <input type="hidden" name="id_akses" hidden>
@@ -43,6 +43,12 @@
                                         </div>  
                                     </div>                                                                                                          
                                 </div>
+
+                                <div class="form-group form-float">
+                                      <div class="form-line">
+                                            <input type="file" name="foto_pengguna"/>
+                                      </div>
+                                  </div>  
 
                           </div>
                       </div>
@@ -65,8 +71,8 @@ $(function(){
             var callAkses =  {
                 datatype: 'json',
                 datafields:[
-                {name :'id_akses'},
-                {name: 'label', type: 'string'},
+                {name :'id_akses', type:'number' },
+                {name: 'label'},
                 {name: 'level_akses', type: 'string'}],
                 id: 'id_akses',
                 url: '<?php echo base_url() ?>Master/ShowDataAkses',
@@ -77,15 +83,18 @@ $(function(){
             var callUser = {
                 datatype: "json",
                 datafield:[
-                    {name:"id_user"},
-                    {name:"username"},
-                    {name:"password"},
-                    {nama:"id_akses"},
-                    {nama:"levelakses", value:'id_akses', values : { source:dtAkses.records, value: 'id_akses', name:'level_akses'}}
+                    {name:'id_user'},
+                    {name:'username'},
+                    {name:'password'},
+                    {nama:'id_akses', type:'number'},
+                    {nama:'foto'},
+                    {nama:'level_akses'}
                 ],
-                url:'<?php echo base_url()?>Master/ShowDataUser' 
+                url:'<?php echo base_url()?>Master/ShowDataUserAkses' 
             }
-
+            var pengguna_imagerenderer = function (row, datafield, value) {
+                return '<img style="margin-left: 5px;" height="60" width="50" src="http://localhost/SisApp/assets/images/foto_pengguna/' + value + '"/>';
+            }
             var dtUser = new $.jqx.dataAdapter(callUser);
             $("#GridPengguna").jqxGrid({
                 source : dtUser,
@@ -93,14 +102,23 @@ $(function(){
                 theme: 'bootstrap',
                 sortable: true,
                 pageable: true, 
+                rowsheight: 60,
+                selectionmode: 'singlerow',
                 columns : [
                 {text:'Kode Pengguna', datafield:'id_user', cellsalign:'center', align:'center'/*pinned:'true'*/},
                 {text:'Pengguna', datafield:'username', cellsalign:'center', align:'center'},
                 {text:'Password', datafield:'password', cellsalign:'center', align:'center'},
-                {text:'Level User', datafield:'id_akses', displayfield: 'levelakses', cellsalign:'center', align:'center'},
+                {text:'Level User', datafield:'level_akses', cellsalign:'center', align:'center'},
+                {text:'Foto', datafield: 'foto', width: 60, cellsrenderer: pengguna_imagerenderer }, 
                 ]
             });
+            $("#GridPengguna").on('cellselect', function (event) {
+                var column = $("#GridPengguna").jqxGrid('getcolumn', event.args.datafield);
+                var value = $("#GridPengguna").jqxGrid('getcellvalue', event.args.rowindex, column.datafield);
+                var displayValue = $("#GridPengguna").jqxGrid('getcellvalue', event.args.rowindex, column.displayfield);
 
+                $("#eventLog").html("<div>Selected Cell<br/>Row: " + event.args.rowindex + ", Column: " + column.text + ", Value: " + value + ", Label: " + displayValue + "</div>");
+            });
 
         //===========> GridSelectAkses
         function btnOkAkses(){
@@ -117,7 +135,7 @@ $(function(){
         }
         $("#SelectAkses").jqxGrid({
               source : dtAkses,
-              width: 250,
+              width: 500,
               theme: 'bootstrap',
               columnsresize: true,
               pageable: true,    
@@ -216,7 +234,7 @@ function HapusPengguna(){
 
 function SimpanPengguna(){
     var url = $("#form-pengguna").attr('action');
-    var data = $("#form-pengguna").serialize();
+    var data = new FormData($("#form-pengguna")[0]);
     var statAction = StatusBtnSimpan == 'tambah'  ? 'Ditambahkan' : 'Diubah';
     $("#penggunaModal").modal('hide');
     $.ajax({
@@ -224,6 +242,9 @@ function SimpanPengguna(){
         url: url,
         data: data,
         dataType: "json",
+        cache : false,
+        contentType : false,
+        processData : false,
         success: function (response) {
             if(response.success){
                 $("#form-pengguna")[0].reset();
@@ -235,10 +256,10 @@ function SimpanPengguna(){
                         showConfirmButton: false
                 });
                 $('#GridPengguna').jqxGrid('updatebounddata');
-            }else{
+            }else if (response.error != ''){
                 swal({
                         title: "Cek Kembali !", 
-                        text: "Data Pengguna Gagal "  + statAction + " ! (error response)",        
+                        text: "Data Pengguna Gagal "  + statAction + " ! ("+ response.error+")",        
                         type: "error",
                         timer: 2000,
                         showConfirmButton: true

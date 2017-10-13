@@ -18,7 +18,7 @@
 
     <!-- Waves Effect Css -->
     <link href="<?php echo base_url() ?>assets/plugins/node-waves/waves.css" rel="stylesheet" />
-
+    <link href="<?php echo base_url() ?>assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
     <!-- Animation Css -->
     <link href="<?php echo base_url() ?>assets/plugins/animate-css/animate.css" rel="stylesheet" />
     <!-- Sweetalert Css -->

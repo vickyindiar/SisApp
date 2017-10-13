@@ -37,70 +37,47 @@
                             <span>Home</span>
                         </a>
                     </li>
-                     <li class="<?php echo ismenuactive("master", $menu_active); ?>">
-                        <a href="<?php echo base_url()?>Master">
-                            <i class="material-icons">widgets</i>
-                            <span>Master</span>
+
+                    <li class="<?php echo ismenuactive("penjualan", $menu_active); ?>">
+                        <a href="pages/typography.html">
+                            <i class="material-icons">shopping_cart</i>
+                            <span>Penjualan</span>
+                        </a>
+                    </li>
+                    <li class="<?php echo ismenuactive("pembelian", $menu_active); ?>">
+                        <a href="<?php echo base_url()?>Pembelian">
+                            <i class="material-icons">shopping_basket</i>
+                            <span>Pembelian</span>
                         </a>
                     </li>
 
-                    <li class="<?php echo ismenuactive("typo", $menu_active); ?>">
-                        <a href="pages/typography.html">
-                            <i class="material-icons">text_fields</i>
-                            <span>Typography</span>
-                        </a>
-                    </li>
-                    <li class="<?php echo ismenuactive("layers", $menu_active); ?>">
-                        <a href="pages/helper-classes.html">
-                            <i class="material-icons">layers</i>
-                            <span>Helper Classes</span>
-                        </a>
-                    </li>
-                    <li class="<?php echo ismenuactive("widgets", $menu_active); ?>">
+                    <li class="<?php echo ismenuactive("retur", $menu_active); ?>">
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons">widgets</i>
-                            <span>Widgets</span>
+                            <i class="material-icons">swap_calls</i>
+                            <span>Retur</span>
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <span>Cards</span>
-                                </a>
-                                <ul class="ml-menu">
-                                    <li>
-                                        <a href="pages/widgets/cards/basic.html">Basic</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/cards/colored.html">Colored</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/cards/no-header.html">No Header</a>
-                                    </li>
-                                </ul>
+                                <a href="<?php echo base_url()?>Retur/returpenjualan">Retur Penjualan</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0);" class="menu-toggle">
-                                    <span>Infobox</span>
-                                </a>
-                                <ul class="ml-menu">
-                                    <li>
-                                        <a href="pages/widgets/infobox/infobox-1.html">Infobox-1</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/infobox/infobox-2.html">Infobox-2</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/infobox/infobox-3.html">Infobox-3</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/infobox/infobox-4.html">Infobox-4</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages/widgets/infobox/infobox-5.html">Infobox-5</a>
-                                    </li>
-                                </ul>
+                                <a href="<?php echo base_url()?>Retur/returpembelian">Retur Pembelian</a>
                             </li>
                         </ul>
+                    </li>
+
+                    <li class="<?php echo ismenuactive("laporan", $menu_active); ?>">
+                        <a href="<?php echo base_url()?>Laporan">
+                            <i class="material-icons">library_books</i>
+                            <span>Laporan</span>
+                        </a>
+                    </li>
+
+                    <li class="<?php echo ismenuactive("master", $menu_active); ?>">
+                        <a href="<?php echo base_url()?>Master">
+                            <i class="material-icons">collections_bookmark</i>
+                            <span>Master Data</span>
+                        </a>
                     </li>
                 </ul>
             </div>

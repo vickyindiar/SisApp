@@ -22,8 +22,16 @@ class Master extends CI_Controller
         $result = $this->model->GetDataBarang();
         echo json_encode($result);
     }
+    function ShowJoinDataBarang(){
+        $result = $this->model->GetJoinDataBarang();
+        echo json_encode($result);
+    }
     function ShowDataKategori(){
         $result = $this->model->GetDataKategori();
+        echo json_encode($result);
+    }
+    function ShowDataSatuan(){
+        $result = $this->model->GetDataSatuan();
         echo json_encode($result);
     }
     function ShowDataPemasok(){
@@ -38,6 +46,10 @@ class Master extends CI_Controller
         $result = $this->model->GetDataUser();
         echo json_encode($result);
     }
+    function ShowDataUserAkses(){
+        $result = $this->model->GetDataUserAkses();
+        echo json_encode($result);
+    }   
     function ShowDataAkses(){
         $result = $this->model->GetDataAkses();
         echo json_encode($result);
@@ -161,28 +173,25 @@ class Master extends CI_Controller
     }
 
     function DoInsertPelanggan(){
-        $isIdExist = $this->model->GetDataPelanggan($this->input->post('kode_pelanggan'));
+        $isIdExist = array();
         $msg['success'] = false;
             if(count($isIdExist) > 0){
                $msg['success'] = false;
                $this->session->set_flashdata('error', 'Data Pelanggan Sudah Ada, Silahkan Cek Tabel Pelanggan Terlebih Dahulu !');            
             }else{
-                $file = print_r($_FILES);
-                $config['upload_path'] = './uploads/';
+                $config['upload_path'] = './assets/images/foto_pelanggan';
                 $config['allowed_types'] = 'jpg|png';
-                $config['max_size'] = '500';
+                $config['max_size'] = '1000';
                 $config['max_width'] = '1024';
                 $config['max_height'] = '768';
                 $img = "foto_pelanggan";
                 $this->load->library('upload', $config);
                 if( ! $this->upload->do_upload($img) ){
-                    $error = array('error' => $this->upload->display_errors());
-                    $this->index($error);
+                    $msg['error'] = $this->upload->display_errors();
                 }else{
                     $nama_foto = $this->upload->data('file_name');
                     $result =  $this->model->InsertDataPelanggan($nama_foto);   
-                }
-           
+                }       
                if($result){
                      $this->session->set_flashdata('success', 'Data Pelanggan Berhasil Ditambah!');
                      $msg['success'] = true;
@@ -217,14 +226,27 @@ class Master extends CI_Controller
                $msg['success'] = false;
                $this->session->set_flashdata('error', 'Data Pengguna Sudah Ada, Silahkan Cek Tabel User Terlebih Dahulu !');            
             }else{
-               $result =  $this->model->InsertDataUser();              
-               if($result){
-                     $this->session->set_flashdata('success', 'Data Pengguna Berhasil Ditambah!');
-                     $msg['success'] = true;
+                $config['upload_path'] = './assets/images/foto_pengguna';
+                $config['allowed_types'] = 'jpg|png';
+                $config['max_size'] = '1000';
+                $config['max_width'] = '1024';
+                $config['max_height'] = '768';
+                $img = "foto_pengguna";
+                $this->load->library('upload', $config);
+
+                if(! $this->upload->do_upload($img)){
+                    $msg['error'] = $this->upload->display_errors();
                 }else{
-                    $this->session->set_flashdata('error', 'Gagal Menambah Data Pengguna, Kesalahan Pada Query Database !');   
-                    $msg['success'] = false;
-                }     
+                    $nama_foto = $this->upload->data('file_name');
+                    $result =  $this->model->InsertDataUser($nama_foto);              
+                    if($result){
+                          $this->session->set_flashdata('success', 'Data Pengguna Berhasil Ditambah!');
+                          $msg['success'] = true;
+                     }else{
+                         $this->session->set_flashdata('error', 'Gagal Menambah Data Pengguna, Kesalahan Pada Query Database !');   
+                         $msg['success'] = false;
+                     }  
+                }
             }    
         echo json_encode($msg);
     }
